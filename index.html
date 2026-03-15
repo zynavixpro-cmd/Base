@@ -42,13 +42,88 @@
             }
         }
 
+        /* --- الشريط العلوي الجديد --- */
+        .top-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 16px;
+            background-color: #0a0a0a;
+        }
+
+        .top-header-logo {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, #a855f7 0%, #c084fc 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .top-header-logo:hover {
+            transform: scale(1.05);
+        }
+
+        .top-header-logo svg {
+            width: 18px;
+            height: 18px;
+            fill: #1a1a2e;
+        }
+
+        .top-header-connect {
+            position: relative;
+            padding: 2px;
+            border-radius: 24px;
+            background: linear-gradient(90deg, #3b82f6 0%, #8b5cf6 25%, #ec4899 50%, #f59e0b 75%, #10b981 100%);
+            background-size: 200% 100%;
+            animation: gradientShift 3s ease infinite;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .top-header-connect:hover {
+            transform: scale(1.02);
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .top-header-connect-inner {
+            background-color: #0a0a0a;
+            color: #ffffff;
+            padding: 10px 24px;
+            border-radius: 22px;
+            font-size: 14px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .top-header-connect:hover .top-header-connect-inner {
+            background-color: #141414;
+        }
+
+        /* تعديل المسافة العلوية للشاشات بسبب الشريط الثابت */
         .screen {
             display: none;
             flex-direction: column;
             height: 100%;
-            padding: 40px 24px;
+            padding: 60px 24px 40px 24px;
             overflow-y: auto;
             overflow-x: hidden;
+            margin-top: 0;
         }
 
         .active {
@@ -99,7 +174,7 @@
         /* --- الشاشة 1 (الرئيسية) --- */
         #screen-1 { 
             justify-content: space-between; 
-            padding-top: 60px; 
+            padding-top: 80px; 
         }
         .logo-container { 
             flex-grow: 1; 
@@ -249,7 +324,10 @@
         /* تحسينات للشاشات الصغيرة جداً */
         @media (max-height: 700px) {
             .screen {
-                padding: 20px 24px;
+                padding: 60px 24px 20px 24px;
+            }
+            #screen-1 {
+                padding-top: 70px;
             }
             .logo-container {
                 margin-top: -20px;
@@ -267,9 +345,32 @@
             width: 0px;
             background: transparent;
         }
+
+        /* تعديل الشريط العلوي للحاوية */
+        @media (min-width: 768px) {
+            .top-header {
+                position: absolute;
+                border-radius: 20px 20px 0 0;
+                max-width: 480px;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+        }
     </style>
 </head>
 <body>
+
+    <!-- الشريط العلوي الجديد -->
+    <div class="top-header">
+        <div class="top-header-logo">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <rect x="4" y="4" width="16" height="16" rx="2"/>
+            </svg>
+        </div>
+        <div class="top-header-connect">
+            <button class="top-header-connect-inner">Connecter</button>
+        </div>
+    </div>
 
     <div class="app-container">
         <div id="screen-1" class="screen active">
