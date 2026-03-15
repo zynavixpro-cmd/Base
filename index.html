@@ -19,34 +19,48 @@
             height: 100vh;
             display: flex;
             flex-direction: column;
-            justify-content: flex-end; /* دفع المحتوى للأسفل كما في الصورة */
-            padding: 20px 24px 40px 24px;
+            justify-content: space-between; /* توزيع المحتوى بين الأعلى والأسفل */
+            padding: 60px 24px 40px 24px;
             overflow: hidden;
+        }
+
+        /* حاوية الشعار (Logo) */
+        .logo-container {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: -50px; /* لرفعه قليلاً للمنتصف */
+        }
+
+        .logo-container img {
+            width: 180px; /* حجم الشعار كبير كما طلبت */
+            height: auto;
         }
 
         /* حاوية النصوص */
         .content-wrapper {
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 35px;
         }
 
         h1 {
-            font-size: 32px;
-            font-weight: 500;
+            font-size: 30px;
+            font-weight: 600;
             line-height: 1.2;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
             letter-spacing: -0.5px;
         }
 
         p {
-            font-size: 13px;
-            color: #888888; /* لون رمادي خافت للشروط */
+            font-size: 13.5px;
+            color: #8E8E93; /* لون الرمادي الخاص بآبل لضمان التطابق */
             line-height: 1.5;
-            padding: 0 10px;
+            padding: 0 15px;
         }
 
         p span {
-            color: #bbbbbb;
+            color: #E5E5EA;
             text-decoration: underline;
             cursor: pointer;
         }
@@ -55,7 +69,7 @@
         .buttons-container {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 10px;
             width: 100%;
         }
 
@@ -63,8 +77,8 @@
             background-color: #ffffff;
             color: #000000;
             border: none;
-            padding: 18px;
-            border-radius: 40px;
+            padding: 20px;
+            border-radius: 100px;
             font-size: 18px;
             font-weight: 600;
             cursor: pointer;
@@ -79,21 +93,25 @@
             font-size: 18px;
             font-weight: 600;
             cursor: pointer;
-            margin-top: 10px;
+            margin-top: 5px;
         }
 
-        /* تأثير عند الضغط */
+        /* تأثيرات اللمس */
         .btn-primary:active {
-            opacity: 0.8;
+            background-color: #e0e0e0;
         }
         
         .btn-secondary:active {
-            opacity: 0.6;
+            opacity: 0.7;
         }
 
     </style>
 </head>
 <body>
+
+    <div class="logo-container">
+        <img src="https://i.ibb.co/0ptqGxqv/63-EDB01-A-F334-4276-9093-767375-F8-B16-B.png" alt="Wallet Logo">
+    </div>
 
     <div class="content-wrapper">
         <h1>Votre plateforme pour<br>tout sur la blockchain</h1>
