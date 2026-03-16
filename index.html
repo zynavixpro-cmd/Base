@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Perfect Match Splash</title>
+    <title>Perfect Splash Screen</title>
     <style>
-        /* إزالة أي فراغات نهائياً */
+        /* إزالة أي هوامش أو فراغات */
         * {
             margin: 0;
             padding: 0;
@@ -16,7 +16,7 @@
             width: 100%;
             height: 100%;
             overflow: hidden;
-            /* هاد اللون هو الماتش المثالي مع خلفية الصورة اللي عطيتي */
+            /* هاد اللون هو الماتش الدقيق مع خلفية اللوغو اللي صيفطتي */
             background-color: #2196f3; 
         }
 
@@ -26,17 +26,24 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            /* حيدنا الـ Gradient باش ما يديرش فرق لوني مع الصورة */
             background-color: #2196f3; 
         }
 
         .logo {
-            /* مقاس اللوغو يبقى أصلي */
-            width: 150px; 
+            /* تكبير اللوغو ليكون واضحاً في الوسط */
+            width: 280px; 
             height: auto;
             display: block;
-            /* هاد الخاصية كتخلي الصورة تندمج كثر */
-            mix-blend-mode: multiply; 
+            /* منع تفاعل المستخدم مع الصورة للحفاظ على شكل الـ Splash */
+            user-select: none;
+            -webkit-user-drag: none;
+            pointer-events: none;
+        }
+
+        /* لضمان دمج الألوان بشكل مثالي في جميع المتصفحات */
+        img {
+            max-width: 100%;
+            image-rendering: -webkit-optimize-contrast;
         }
     </style>
 </head>
