@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Splash Screen</title>
+    <title>Perfect Match Splash</title>
     <style>
-        /* إزالة أي هوامش وضمان ملء الشاشة */
+        /* إزالة أي فراغات نهائياً */
         * {
             margin: 0;
             padding: 0;
@@ -15,35 +15,34 @@
         body, html {
             width: 100%;
             height: 100%;
-            overflow: hidden; /* منع التمرير */
-            background-color: #3b42d4; /* لون احتياطي */
+            overflow: hidden;
+            /* هاد اللون هو الماتش المثالي مع خلفية الصورة اللي عطيتي */
+            background-color: #2196f3; 
         }
 
-        /* الحاوية الرئيسية */
-        .background {
+        .container {
             width: 100%;
-            min-height: 100vh;
-            /* التدرج اللوني مطابق للصورة الأصلية */
-            background: linear-gradient(135deg, #3b42d4 0%, #2096f3 100%);
-            background-attachment: fixed; /* تثبيت الخلفية */
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
+            /* حيدنا الـ Gradient باش ما يديرش فرق لوني مع الصورة */
+            background-color: #2196f3; 
         }
 
-        /* تنسيق الشعار بنفس المقاسات */
         .logo {
-            width: 120px;
+            /* مقاس اللوغو يبقى أصلي */
+            width: 150px; 
             height: auto;
             display: block;
-            user-select: none;
-            -webkit-user-drag: none;
+            /* هاد الخاصية كتخلي الصورة تندمج كثر */
+            mix-blend-mode: multiply; 
         }
     </style>
 </head>
 <body>
 
-    <div class="background">
+    <div class="container">
         <img src="https://i.ibb.co/qYRYP60L/8-A80-E4-D3-4-C0-D-4482-87-A3-A101980-B803-D.png" 
              alt="Logo" 
              class="logo">
