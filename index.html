@@ -2,36 +2,40 @@
 <html lang="ar">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Splash Screen Replica</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Splash Screen</title>
     <style>
-        /* إعدادات الصفحة الأساسية لإزالة الفراغات */
-        body, html {
+        /* إزالة أي هوامش وضمان ملء الشاشة */
+        * {
             margin: 0;
             padding: 0;
-            height: 100%;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
+            box-sizing: border-box;
         }
 
-        /* حاوية الخلفية مع التدرج اللوني (Gradient) */
+        body, html {
+            width: 100%;
+            height: 100%;
+            overflow: hidden; /* منع التمرير */
+            background-color: #3b42d4; /* لون احتياطي */
+        }
+
+        /* الحاوية الرئيسية */
         .background {
             width: 100%;
-            height: 100vh;
-            /* التدرج اللوني من الأزرق الداكن لليسر للأزرق الفاتح لليمن */
+            min-height: 100vh;
+            /* التدرج اللوني مطابق للصورة الأصلية */
             background: linear-gradient(135deg, #3b42d4 0%, #2096f3 100%);
+            background-attachment: fixed; /* تثبيت الخلفية */
             display: flex;
             justify-content: center;
             align-items: center;
         }
 
-        /* تنسيق الشعار ليحافظ على أبعاده ويكون في الوسط */
+        /* تنسيق الشعار بنفس المقاسات */
         .logo {
-            width: 120px; /* العرض التقريبي للشعار في الصورة */
+            width: 120px;
             height: auto;
+            display: block;
             user-select: none;
             -webkit-user-drag: none;
         }
