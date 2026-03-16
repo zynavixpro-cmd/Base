@@ -1,203 +1,205 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Crypto Wallet App</title>
+    <title>IronWallet Demo</title>
     <style>
-        /* إعدادات عامة */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
 
         body, html {
             width: 100%;
             height: 100%;
             overflow: hidden;
-            background-color: #f8fbff; /* لون خلفية الصفحة الثانية */
+            background-color: #ffffff; /* الصفحة الثانية بيضاء تماماً */
         }
 
-        /* 1. واجهة التحميل (Splash Screen) */
+        /* 1. Splash Screen - اللون الأزرق الدقيق من الصورة */
         #splash-screen {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: #2196f3; /* اللون المطابق للوغو */
+            /* هاد الكود هو اللون الأزرق اللي في اللغو ديالك بالضبط */
+            background-color: #4a90e2; 
             display: flex;
             justify-content: center;
             align-items: center;
-            z-index: 9999;
-            transition: opacity 0.5s ease;
+            z-index: 100;
+            transition: opacity 0.4s ease-out;
         }
 
-        #splash-screen .logo {
-            width: 200px;
+        #splash-screen img {
+            width: 180px; /* مقاس اللغو في الوسط */
             height: auto;
         }
 
-        /* 2. الصفحة الرئيسية (Onboarding) */
+        /* 2. Main Content - الواجهة البيضاء */
         #main-content {
-            display: none; /* مخفية في البداية */
+            opacity: 0; /* كيبدا مخفي */
             height: 100vh;
             display: flex;
             flex-direction: column;
-            justify-content: flex-end; /* دفع العناصر للأسفل */
             align-items: center;
-            padding: 40px 20px;
+            padding: 20px;
+            transition: opacity 0.5s ease-in;
+        }
+
+        .content-body {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             text-align: center;
         }
 
-        .info-section {
-            margin-bottom: auto;
-            margin-top: 50%; /* تقريب الصورة من الوسط */
-        }
-
         .title {
-            font-size: 24px;
+            font-size: 26px;
             font-weight: 700;
-            color: #1a1a1a;
-            margin-bottom: 10px;
+            color: #000000;
+            margin-bottom: 12px;
         }
 
         .subtitle {
             font-size: 16px;
-            color: #7d7d7d;
-            margin-bottom: 30px;
+            color: #8e8e93;
+            max-width: 80%;
         }
 
-        /* النقط (Pagination dots) */
-        .dots {
+        /* النقط */
+        .pagination {
             display: flex;
-            gap: 8px;
-            margin-bottom: 60px;
+            gap: 6px;
+            margin: 40px 0;
         }
 
         .dot {
-            width: 8px;
-            height: 8px;
-            background: #e0e0e0;
+            width: 7px;
+            height: 7px;
+            background: #e5e5ea;
             border-radius: 50%;
         }
 
         .dot.active {
-            width: 24px;
-            border-radius: 4px;
-            background: #3478f6;
+            width: 22px;
+            background: #4a8df1;
+            border-radius: 10px;
         }
 
-        /* شروط الاستخدام */
-        .terms-container {
+        /* الأسفل: الشروط والأزرار */
+        .footer {
+            width: 100%;
+            max-width: 400px;
+            padding-bottom: 40px;
+        }
+
+        .checkbox-row {
             display: flex;
-            align-items: center;
-            gap: 10px;
+            align-items: flex-start;
+            gap: 12px;
             margin-bottom: 25px;
             font-size: 13px;
-            color: #666;
-            width: 100%;
-            max-width: 350px;
-            text-align: left;
+            color: #3a3a3a;
+            line-height: 1.4;
         }
 
-        .terms-container input[type="checkbox"] {
+        .checkbox-row input {
             width: 20px;
             height: 20px;
-            accent-color: #3478f6;
+            accent-color: #4a8df1;
         }
 
-        .terms-container a {
-            color: #3478f6;
+        .checkbox-row a {
+            color: #4a8df1;
             text-decoration: none;
         }
 
-        /* الأزرار */
-        .btn {
+        /* الزر الرئيسي بالتدرج اللوني الصحيح */
+        .btn-create {
+            display: block;
             width: 100%;
-            max-width: 350px;
-            padding: 16px;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            border: none;
-            margin-bottom: 15px;
-            transition: transform 0.2s;
-        }
-
-        .btn:active {
-            transform: scale(0.98);
-        }
-
-        .btn-primary {
-            /* التدرج اللوني للزر كما في الصورة */
-            background: linear-gradient(to right, #384fb7, #3182ac);
+            padding: 18px;
+            border-radius: 14px;
+            background: linear-gradient(90deg, #3f51b5, #4a90e2);
             color: white;
+            text-align: center;
             text-decoration: none;
-            display: inline-block;
+            font-weight: 600;
+            font-size: 17px;
+            margin-bottom: 15px;
+            border: none;
         }
 
-        .btn-secondary {
+        .btn-restore {
+            display: block;
+            width: 100%;
+            padding: 15px;
             background: transparent;
-            color: #3478f6;
+            color: #4a8df1;
+            text-align: center;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 17px;
+            border: none;
         }
-
     </style>
 </head>
 <body>
 
     <div id="splash-screen">
-        <img src="https://i.ibb.co/qYRYP60L/8-A80-E4-D3-4-C0-D-4482-87-A3-A101980-B803-D.png" class="logo" alt="Logo">
+        <img src="https://i.ibb.co/qYRYP60L/8-A80-E4-D3-4-C0-D-4482-87-A3-A101980-B803-D.png" alt="Logo">
     </div>
 
-    <div id="main-content" style="display: none;">
-        <div class="info-section">
+    <div id="main-content">
+        <div class="content-body">
             <h1 class="title">Sûr et pratique</h1>
             <p class="subtitle">Vous seul avez accès aux clés privées</p>
+            
+            <div class="pagination">
+                <div class="dot active"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+            </div>
         </div>
 
-        <div class="dots">
-            <div class="dot active"></div>
-            <div class="dot"></div>
-            <div class="dot"></div>
+        <div class="footer">
+            <div class="checkbox-row">
+                <input type="checkbox" checked>
+                <span>J'ai lu et accepte <a href="#">Les conditions d'utilisation</a> et <a href="#">Politique de confidentialité</a></span>
+            </div>
+
+            <a href="https://apps.apple.com/in/app/ironwallet-crypto-wallet/id6451146325" class="btn-create">
+                Créer un portefeuille
+            </a>
+
+            <button class="btn-restore">J'ai déjà un portefeuille</button>
         </div>
-
-        <div class="terms-container">
-            <input type="checkbox" id="agree" checked>
-            <label for="agree">J'ai lu et accepte <a href="#">Les conditions d'utilisation</a> et <a href="#">Politique de confidentialité</a></label>
-        </div>
-
-        <a href="https://apps.apple.com/in/app/ironwallet-crypto-wallet/id6451146325" class="btn btn-primary">
-            Créer un portefeuille
-        </a>
-
-        <button class="btn btn-secondary">
-            J'ai déjà un portefeuille
-        </button>
     </div>
 
     <script>
-        // كود التحكم في ظهور الصفحات
-        window.onload = function() {
-            setTimeout(function() {
-                var splash = document.getElementById('splash-screen');
-                var main = document.getElementById('main-content');
-                
-                // إخفاء الـ Splash Screen
+        window.addEventListener('load', () => {
+            const splash = document.getElementById('splash-screen');
+            const main = document.getElementById('main-content');
+
+            // مورا 2.5 ثواني كيحيد الـ Splash ويبان المحتوى
+            setTimeout(() => {
                 splash.style.opacity = '0';
                 
-                setTimeout(function() {
+                setTimeout(() => {
                     splash.style.display = 'none';
-                    // إظهار الصفحة الرئيسية
                     main.style.display = 'flex';
-                }, 500); // وقت التلاشي
-                
-            }, 3000); // 3 ثواني قبل الانتقال
-        };
+                    // تحريك خفيف باش تبان الصفحة دخلات بنعومة
+                    setTimeout(() => { main.style.opacity = '1'; }, 50);
+                }, 400);
+            }, 2500);
+        });
     </script>
-
 </body>
 </html>
