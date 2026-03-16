@@ -1,1 +1,49 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Splash Screen Replica</title>
+    <style>
+        /* إعدادات الصفحة الأساسية لإزالة الفراغات */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
 
+        /* حاوية الخلفية مع التدرج اللوني (Gradient) */
+        .background {
+            width: 100%;
+            height: 100vh;
+            /* التدرج اللوني من الأزرق الداكن لليسر للأزرق الفاتح لليمن */
+            background: linear-gradient(135deg, #3b42d4 0%, #2096f3 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* تنسيق الشعار ليحافظ على أبعاده ويكون في الوسط */
+        .logo {
+            width: 120px; /* العرض التقريبي للشعار في الصورة */
+            height: auto;
+            user-select: none;
+            -webkit-user-drag: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="background">
+        <img src="https://i.ibb.co/qYRYP60L/8-A80-E4-D3-4-C0-D-4482-87-A3-A101980-B803-D.png" 
+             alt="Logo" 
+             class="logo">
+    </div>
+
+</body>
+</html>
