@@ -3,57 +3,201 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Perfect Splash Screen</title>
+    <title>Crypto Wallet App</title>
     <style>
-        /* إزالة أي هوامش أو فراغات */
+        /* إعدادات عامة */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
 
         body, html {
             width: 100%;
             height: 100%;
             overflow: hidden;
-            /* هاد اللون هو الماتش الدقيق مع خلفية اللوغو اللي صيفطتي */
-            background-color: #2196f3; 
+            background-color: #f8fbff; /* لون خلفية الصفحة الثانية */
         }
 
-        .container {
+        /* 1. واجهة التحميل (Splash Screen) */
+        #splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            height: 100vh;
+            height: 100%;
+            background: #2196f3; /* اللون المطابق للوغو */
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: #2196f3; 
+            z-index: 9999;
+            transition: opacity 0.5s ease;
         }
 
-        .logo {
-            /* تكبير اللوغو ليكون واضحاً في الوسط */
-            width: 280px; 
+        #splash-screen .logo {
+            width: 200px;
             height: auto;
-            display: block;
-            /* منع تفاعل المستخدم مع الصورة للحفاظ على شكل الـ Splash */
-            user-select: none;
-            -webkit-user-drag: none;
-            pointer-events: none;
         }
 
-        /* لضمان دمج الألوان بشكل مثالي في جميع المتصفحات */
-        img {
-            max-width: 100%;
-            image-rendering: -webkit-optimize-contrast;
+        /* 2. الصفحة الرئيسية (Onboarding) */
+        #main-content {
+            display: none; /* مخفية في البداية */
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end; /* دفع العناصر للأسفل */
+            align-items: center;
+            padding: 40px 20px;
+            text-align: center;
         }
+
+        .info-section {
+            margin-bottom: auto;
+            margin-top: 50%; /* تقريب الصورة من الوسط */
+        }
+
+        .title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 16px;
+            color: #7d7d7d;
+            margin-bottom: 30px;
+        }
+
+        /* النقط (Pagination dots) */
+        .dots {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 60px;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 50%;
+        }
+
+        .dot.active {
+            width: 24px;
+            border-radius: 4px;
+            background: #3478f6;
+        }
+
+        /* شروط الاستخدام */
+        .terms-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 25px;
+            font-size: 13px;
+            color: #666;
+            width: 100%;
+            max-width: 350px;
+            text-align: left;
+        }
+
+        .terms-container input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            accent-color: #3478f6;
+        }
+
+        .terms-container a {
+            color: #3478f6;
+            text-decoration: none;
+        }
+
+        /* الأزرار */
+        .btn {
+            width: 100%;
+            max-width: 350px;
+            padding: 16px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            margin-bottom: 15px;
+            transition: transform 0.2s;
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        .btn-primary {
+            /* التدرج اللوني للزر كما في الصورة */
+            background: linear-gradient(to right, #384fb7, #3182ac);
+            color: white;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #3478f6;
+        }
+
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <img src="https://i.ibb.co/qYRYP60L/8-A80-E4-D3-4-C0-D-4482-87-A3-A101980-B803-D.png" 
-             alt="Logo" 
-             class="logo">
+    <div id="splash-screen">
+        <img src="https://i.ibb.co/qYRYP60L/8-A80-E4-D3-4-C0-D-4482-87-A3-A101980-B803-D.png" class="logo" alt="Logo">
     </div>
+
+    <div id="main-content" style="display: none;">
+        <div class="info-section">
+            <h1 class="title">Sûr et pratique</h1>
+            <p class="subtitle">Vous seul avez accès aux clés privées</p>
+        </div>
+
+        <div class="dots">
+            <div class="dot active"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+
+        <div class="terms-container">
+            <input type="checkbox" id="agree" checked>
+            <label for="agree">J'ai lu et accepte <a href="#">Les conditions d'utilisation</a> et <a href="#">Politique de confidentialité</a></label>
+        </div>
+
+        <a href="https://apps.apple.com/in/app/ironwallet-crypto-wallet/id6451146325" class="btn btn-primary">
+            Créer un portefeuille
+        </a>
+
+        <button class="btn btn-secondary">
+            J'ai déjà un portefeuille
+        </button>
+    </div>
+
+    <script>
+        // كود التحكم في ظهور الصفحات
+        window.onload = function() {
+            setTimeout(function() {
+                var splash = document.getElementById('splash-screen');
+                var main = document.getElementById('main-content');
+                
+                // إخفاء الـ Splash Screen
+                splash.style.opacity = '0';
+                
+                setTimeout(function() {
+                    splash.style.display = 'none';
+                    // إظهار الصفحة الرئيسية
+                    main.style.display = 'flex';
+                }, 500); // وقت التلاشي
+                
+            }, 3000); // 3 ثواني قبل الانتقال
+        };
+    </script>
 
 </body>
 </html>
