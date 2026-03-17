@@ -3,53 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Splash Screen Design</title>
+    <title>Splash Screen - Icon Version</title>
     <style>
-        /* كود الخلفية والتنسيق العام */
-        body, html {
+        /* إعدادات الصفحة باش تغطي الشاشة كاملة وبدون هوامش */
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
             height: 100%;
+            width: 100%;
+            overflow: hidden; /* باش نمنعو أي سكرول */
             display: flex;
             justify-content: center;
             align-items: center;
-            /* هاد السطر هو اللي كيدير التدرج اللوني اللي ف الصورة */
-            background: linear-gradient(135deg, #4249e7 0%, #308ae4 50%, #17c2f1 100%);
-            font-family: Arial, sans-serif;
+            
+            /* تدرج الألوان المأخوذ من الصورة الأصلية */
+            background: linear-gradient(135deg, #4346e9 0%, #3189e4 50%, #15c3f3 100%);
         }
 
-        /* حاوية اللوغو */
-        .logo-container {
-            text-align: center;
-        }
-
-        /* تصميم حرف W ليكون قريب من اللوغو */
-        .logo-text {
-            color: white;
-            font-size: 80px;
-            font-weight: bold;
-            position: relative;
-            letter-spacing: -5px;
-            display: inline-block;
-        }
-
-        /* النقطة اللي فوق الحرف (اللمسة الفنية) */
-        .logo-text::before {
-            content: '';
-            position: absolute;
-            width: 12px;
-            height: 12px;
-            background-color: white;
-            border-radius: 50%;
-            top: 15px;
-            left: -5px;
+        /* تنسيق الإيقونة */
+        .icon-container img {
+            width: 120px; /* تقدر تغير الحجم من هنا */
+            height: auto;
+            display: block;
         }
     </style>
 </head>
 <body>
 
-    <div class="logo-container">
-        <div class="logo-text">w</div>
+    <div class="icon-container">
+        <a href="https://ibb.co/F4B4jpsk">
+            <img src="https://i.ibb.co/qYRYP60L/8-A80-E4-D3-4-C0-D-4482-87-A3-A101980-B803-D.png" alt="Logo Icon" border="0">
+        </a>
     </div>
 
 </body>
