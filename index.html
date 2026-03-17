@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Responsive Splash Screen</title>
+    <title>Splash Screen</title>
     <style>
         /* إعدادات لتصفير المسافات وجعل الخلفية تمتد تماماً */
         html, body {
@@ -11,37 +11,36 @@
             padding: 0;
             width: 100%;
             height: 100%;
-            overflow: hidden; /* باش نمنعو السكرول نهائياً */
+            overflow: hidden; /* منع السكرول نهائياً */
         }
 
         body {
-            /* هاد الكود كيضمن أن اللون يغطي الشاشة كاملة (viewport) */
+            /* التدرج اللوني الذي يملأ الشاشة بالكامل */
             background: #4346e9; /* لون احتياطي */
             background: linear-gradient(135deg, #4249e7 0%, #308ae4 50%, #17c2f1 100%);
             background-attachment: fixed;
             background-size: cover;
             
-            /* وضع الإيقونة في الوسط تماماً */
+            /* وضع الإيقونة في السنتر (الوسط) تماماً */
             display: flex;
             justify-content: center;
             align-items: center;
         }
 
-        /* تنسيق الإيقونة لتناسب الجوال والحاسوب */
+        /* تنسيق الإيقونة لتناسب جميع الشاشات */
         .icon-container img {
-            max-width: 200px; /* حجم معقول للحاسوب */
-            width: 40vw;      /* حجم نسبي للجوال */
-            min-width: 120px; /* أصغر حجم ممكن باش ميتكمش بزاف */
+            max-width: 200px; /* الحجم الأقصى في الحاسوب */
+            width: 40vw;      /* الحجم النسبي في الجوال */
+            min-width: 100px; /* الحجم الأدنى */
             height: auto;
+            display: block;
         }
     </style>
 </head>
 <body>
 
     <div class="icon-container">
-        <a href="https://ibb.co/F4B4jpsk">
-            <img src="https://i.ibb.co/qYRYP60L/8-A80-E4-D3-4-C0-D-4482-87-A3-A101980-B803-D.png" alt="Icon Logo" border="0">
-        </a>
+        <img src="icon1.png" alt="Icon Logo">
     </div>
 
 </body>
