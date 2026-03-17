@@ -3,144 +3,175 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Wiron Wallet - Home Interface</title>
+    <title>Wiron Wallet - Full Dynamic Site</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
 
-        /* إعدادات الخلفية البيضاء */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
         
         body, html { 
             height: 100%; width: 100%; 
-            background-color: #ffffff; /* */
-            display: flex; flex-direction: column; align-items: center; overflow: hidden;
+            background-color: #ffffff;
+            display: flex; flex-direction: column; align-items: center;
+            overflow-x: hidden; /* السماح بالتمرير العمودي فقط */
         }
 
-        /* --- الهيدر (Header) --- */
+        /* --- Header --- */
         .main-header {
-            width: 100%;
-            height: 75px;
-            padding: 0 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: #ffffff;
-            border-bottom: 1px solid #f0f0f0;
-            z-index: 2000;
+            width: 100%; height: 75px; padding: 0 5%;
+            display: flex; justify-content: space-between; align-items: center;
+            background: #ffffff; border-bottom: 1px solid #f0f0f0; z-index: 2000;
         }
-
-        .header-left img { height: 40px; width: auto; } /* استدعاء icon4.png */
+        .header-left img { height: 40px; width: auto; }
 
         .nav-links { display: flex; gap: 30px; }
-        .nav-links a { 
-            color: #333; 
-            text-decoration: none; 
-            font-size: 15px; 
-            font-weight: 400; 
-            transition: 0.3s;
-        }
+        .nav-links a { color: #333; text-decoration: none; font-size: 14px; transition: 0.3s; }
         .nav-links a.active { font-weight: 600; border-bottom: 2px solid #2b56d3; padding-bottom: 4px; }
 
-        .header-right { display: flex; align-items: center; gap: 20px; }
-        .lang-selector { color: #333; display: flex; align-items: center; gap: 8px; font-size: 14px; }
-        .lang-selector img { width: 22px; border-radius: 2px; }
-
-        /* --- حاوية التطبيق في الـ Home --- */
-        .app-container {
-            width: 100%; max-width: 420px; height: 82vh;
-            margin-top: 20px; background-color: white;
-            position: relative; overflow: hidden;
-            border-radius: 35px; 
-            box-shadow: 0 10px 40px rgba(0,0,0,0.08); 
-            border: 1px solid #eee;
-            z-index: 10;
+        /* --- Main Content Container --- */
+        .content-wrapper {
+            flex: 1; width: 100%; display: flex; flex-direction: column; align-items: center;
+            padding: 40px 0;
         }
+
+        .app-container {
+            width: 100%; max-width: 410px; height: 780px;
+            background-color: white; position: relative; overflow: hidden;
+            border-radius: 35px; box-shadow: 0 10px 40px rgba(0,0,0,0.08); border: 1px solid #eee;
+        }
+
+        /* --- Footer (دمج التذييل من الصورة 8) --- */
+        .main-footer {
+            width: 100%; padding: 40px 8%;
+            background: linear-gradient(135deg, #2b56d3 0%, #15bff0 100%); /* نفس تدرج الصورة */
+            color: white; display: flex; flex-wrap: wrap; justify-content: space-between;
+            gap: 30px; margin-top: 60px;
+        }
+
+        .footer-brand { flex: 1; min-width: 200px; }
+        .footer-brand img { height: 45px; margin-bottom: 20px; }
+        .social-icons { display: flex; gap: 15px; margin-top: 15px; }
+        .social-icons img { width: 24px; cursor: pointer; opacity: 0.9; }
+
+        .footer-links { display: flex; flex: 2; justify-content: space-around; gap: 20px; }
+        .link-group { display: flex; flex-direction: column; gap: 12px; }
+        .link-group a { color: white; text-decoration: none; font-size: 14px; opacity: 0.85; transition: 0.3s; }
+        .link-group a:hover { opacity: 1; text-decoration: underline; }
+
+        .back-to-top {
+            width: 40px; height: 40px; background: rgba(255,255,255,0.3);
+            border-radius: 5px; display: flex; justify-content: center; align-items: center;
+            cursor: pointer; align-self: center;
+        }
+
+        /* --- Screens --- */
+        .screen { position: absolute; width: 100%; height: 100%; background: white; display: flex; flex-direction: column; transition: 0.5s ease; }
+        .hidden-right { transform: translateX(100%); }
+        #splash-screen { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #2b56d3 0%, #15bff0 100%); display: flex; justify-content: center; align-items: center; z-index: 1000; transition: 0.8s; }
+
+        /* Buttons & Inputs */
+        .btn-primary { width: 100%; height: 55px; background: #3c64d1; color: white; border: none; border-radius: 12px; font-size: 17px; font-weight: 600; cursor: pointer; }
+        .btn-importer { width: 100%; height: 55px; background: linear-gradient(to right, #2b56d3, #15bff0); color: white; border: none; border-radius: 30px; font-size: 18px; font-weight: 600; cursor: pointer; }
+        .input-box { width: 100%; height: 80px; border: 1.5px solid #d1d9e6; border-radius: 15px; margin-bottom: 20px; padding: 15px; outline: none; }
 
         @media (max-width: 768px) {
-            .app-container { max-width: 100%; height: 100%; margin-top: 0; border-radius: 0; border: none; }
-            .nav-links, .header-right { display: none; }
+            .footer-links { flex-direction: column; }
+            .nav-links { display: none; }
         }
-
-        /* --- نظام الصفحات والتحريك --- */
-        .screen {
-            position: absolute; width: 100%; height: 100%; 
-            background: white; display: flex; flex-direction: column;
-            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        /* Splash Screen */
-        #splash-screen {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(135deg, #2b56d3 0%, #15bff0 100%); /* */
-            display: flex; justify-content: center; align-items: center; z-index: 1000;
-            transition: opacity 0.8s ease;
-        }
-
-        /* الأزرار والمدخلات */
-        .btn-primary { width: 100%; height: 55px; background: #3c64d1; color: white; border: none; border-radius: 12px; font-size: 17px; font-weight: 600; cursor: pointer; }
-        .btn-importer { width: 100%; height: 55px; background: linear-gradient(to right, #2b56d3, #15bff0); color: white; border: none; border-radius: 30px; font-size: 18px; font-weight: 600; cursor: pointer; } /* */
-        .input-box { width: 100%; height: 80px; border: 1.5px solid #d1d9e6; border-radius: 15px; margin-bottom: 20px; padding: 15px; outline: none; } /* */
-
-        .hidden-right { transform: translateX(100%); }
     </style>
 </head>
 <body>
 
     <header class="main-header">
-        <div class="header-left">
-            <img src="icon4.png" alt="Logo"> </div>
-        
+        <div class="header-left"><img src="icon4.png" alt="Logo"></div>
         <nav class="nav-links">
             <a href="#" class="active">Home</a>
             <a href="#">FAQ</a>
             <a href="#">News</a>
             <a href="#">Coins Wiki</a>
         </nav>
-
-        <div class="header-right">
-            <div class="lang-selector">
-                <img src="https://flagcdn.com/w20/gb.png" alt="English"> English
-            </div>
-        </div>
+        <div style="color:#333; font-size:14px;">🇬🇧 English</div>
     </header>
 
-    <div class="app-container">
-        <div id="splash-screen">
-            <img src="icon1.png" alt="Splash" style="width:110px;"> </div>
+    <div class="content-wrapper">
+        <div class="app-container">
+            <div id="splash-screen"><img src="icon1.png" style="width:110px;"></div>
+            
+            <div id="onboarding-screen" class="screen" style="padding:40px 25px; text-align:center;">
+                <img src="icon2.png" style="width:100%; max-width:240px; margin:20px auto;">
+                <h1 style="font-size:24px;">Sûr et pratique</h1>
+                <p style="color:#666; margin:15px 0;">Vous seul avez accès aux clés privées</p>
+                <div style="margin-top:auto; padding-bottom:15px;">
+                    <button class="btn-primary">Créer un portefeuille</button>
+                    <button style="background:none; border:none; color:#3c64d1; font-weight:600; margin-top:15px; cursor:pointer;" onclick="navigate('onboarding-screen', 'import-methods-screen')">J'ai déjà un portefeuille</button>
+                </div>
+            </div>
 
-        <div id="onboarding-screen" class="screen" style="padding: 40px 25px; text-align: center;">
-            <img src="icon2.png" alt="Hero" style="width:100%; max-width:240px; margin: 20px auto;"> <h1 style="font-size: 24px; color: #1a1a1a;">Sûr et pratique</h1> <p style="color:#666; margin:15px 0;">Vous seul avez accès aux clés privées</p> <div style="margin-top:auto; padding-bottom:15px;">
-                <button class="btn-primary">Créer un portefeuille</button> <button style="background:none; border:none; color:#3c64d1; font-weight:600; margin-top:15px; cursor:pointer;" onclick="navigate('onboarding-screen', 'import-methods-screen')">J'ai déjà un portefeuille</button> </div>
+            <div id="import-methods-screen" class="screen hidden-right">
+                <div style="display:flex; align-items:center; padding:15px; border-bottom:1px solid #f0f0f0;">
+                    <span style="font-size:30px; cursor:pointer;" onclick="navigate('import-methods-screen', 'onboarding-screen')">‹</span>
+                    <div style="flex-grow:1; text-align:center; font-weight:600;">Importer le portefeuille</div>
+                </div>
+                <div style="padding:20px;">
+                    <div style="background:#fff; padding:20px; border-radius:18px; display:flex; align-items:center; gap:15px; box-shadow:0 4px 15px rgba(0,0,0,0.05); cursor:pointer;" onclick="navigate('import-methods-screen', 'manual-entry-screen')">
+                        <img src="icon3.png" style="width:50px;">
+                        <div><h4 style="font-size:16px;">Manuellement</h4><p style="font-size:12px; color:#999;">Écrivez manuellement la phrase...</p></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="manual-entry-screen" class="screen hidden-right">
+                <div style="display:flex; align-items:center; padding:15px; border-bottom:1px solid #f0f0f0;">
+                    <span style="font-size:30px; cursor:pointer;" onclick="navigate('manual-entry-screen', 'import-methods-screen')">‹</span>
+                    <div style="flex-grow:1; text-align:center; font-weight:600;">Importer le portefeuille</div>
+                </div>
+                <div style="padding:30px 20px; flex-grow:1;">
+                    <textarea class="input-box" placeholder="Saisissez un nouveau nom"></textarea>
+                    <textarea class="input-box" placeholder="Saisissez un nouveau nom"></textarea>
+                </div>
+                <div style="padding:20px;"><button class="btn-importer">Importer</button></div>
+            </div>
         </div>
+    </div>
 
-        <div id="import-methods-screen" class="screen hidden-right">
-            <div style="display:flex; align-items:center; padding:15px; border-bottom:1px solid #f0f0f0;">
-                <span style="font-size:30px; cursor:pointer;" onclick="navigate('import-methods-screen', 'onboarding-screen')">‹</span> <div style="flex-grow:1; text-align:center; font-weight:600;">Importer le portefeuille</div> </div>
-            <div style="padding:20px;">
-                <div style="background:#fff; padding:20px; border-radius:18px; display:flex; align-items:center; gap:15px; box-shadow:0 4px 15px rgba(0,0,0,0.05); cursor:pointer; border: 1px solid #f0f0f0;" onclick="navigate('import-methods-screen', 'manual-entry-screen')">
-                    <img src="icon3.png" style="width:50px;"> <div><h4 style="font-size:16px;">Manuellement</h4><p style="font-size:12px; color:#999;">Écrivez manuellement la phrase...</p></div> </div>
+    <footer class="main-footer">
+        <div class="footer-brand">
+            <img src="icon4.png" alt="Wiron Wallet">
+            <div class="social-icons">
+                <img src="x_icon.png" alt="X">
+                <img src="telegram_icon.png" alt="TG">
+                <img src="youtube_icon.png" alt="YT">
+                <img src="facebook_icon.png" alt="FB">
+            </div>
+        </div>
+        
+        <div class="footer-links">
+            <div class="link-group">
+                <a href="#">Home</a>
+                <a href="#">Cookies settings</a>
+            </div>
+            <div class="link-group">
+                <a href="#">Terms and conditions</a>
+                <a href="#">Legal Enquiries</a>
+            </div>
+            <div class="link-group">
+                <a href="#">Privacy policy</a>
+                <a href="#">NFC</a>
             </div>
         </div>
 
-        <div id="manual-entry-screen" class="screen hidden-right">
-            <div style="display:flex; align-items:center; padding:15px; border-bottom:1px solid #f0f0f0;">
-                <span style="font-size:30px; cursor:pointer;" onclick="navigate('manual-entry-screen', 'import-methods-screen')">‹</span> <div style="flex-grow:1; text-align:center; font-weight:600;">Importer le portefeuille</div> </div>
-            <div style="padding:30px 20px; flex-grow:1;">
-                <textarea class="input-box" placeholder="Saisissez un nouveau nom"></textarea> <textarea class="input-box" placeholder="Saisissez un nouveau nom"></textarea> </div>
-            <div style="padding:20px;"><button class="btn-importer">Importer</button></div> </div>
-    </div>
+        <div class="back-to-top">↑</div>
+    </footer>
 
     <script>
-        // التحكم في إخفاء الـ Splash وإظهار الـ Home ديناميكياً
         window.addEventListener('load', () => {
             setTimeout(() => {
                 const splash = document.getElementById('splash-screen');
                 splash.style.opacity = '0';
                 setTimeout(() => splash.style.display = 'none', 800);
-            }, 2000); // 2 ثواني فقط للـ Splash لسرعة الوصول للـ Home
+            }, 2000);
         });
 
-        // وظيفة التنقل بين الصفحات داخل الـ Container
         function navigate(fromId, toId) {
             document.getElementById(fromId).classList.add('hidden-right');
             document.getElementById(toId).classList.remove('hidden-right');
