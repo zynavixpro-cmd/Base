@@ -2,35 +2,45 @@
 <html lang="ar">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Splash Screen</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Responsive Splash Screen</title>
     <style>
-        /* هاد الجزء كيخلي اللون يغطي الصفحة كاملة 100% */
+        /* إعدادات لتصفير المسافات وجعل الخلفية تمتد تماماً */
         html, body {
             margin: 0;
             padding: 0;
             width: 100%;
             height: 100%;
+            overflow: hidden; /* باش نمنعو السكرول نهائياً */
+        }
+
+        body {
+            /* هاد الكود كيضمن أن اللون يغطي الشاشة كاملة (viewport) */
+            background: #4346e9; /* لون احتياطي */
+            background: linear-gradient(135deg, #4249e7 0%, #308ae4 50%, #17c2f1 100%);
+            background-attachment: fixed;
+            background-size: cover;
+            
+            /* وضع الإيقونة في الوسط تماماً */
             display: flex;
             justify-content: center;
             align-items: center;
-            /* التدرج اللوني اللي كاين في الصورة */
-            background: linear-gradient(135deg, #4346e9 0%, #3189e4 50%, #15c3f3 100%);
-            overflow: hidden; /* باش ميبانش السكرول */
         }
 
-        /* تنسيق بسيط للإيقونة باش تجي في الوسط */
-        .icon-wrapper img {
-            max-width: 150px; /* تقدر تبدل الحجم من هنا */
+        /* تنسيق الإيقونة لتناسب الجوال والحاسوب */
+        .icon-container img {
+            max-width: 200px; /* حجم معقول للحاسوب */
+            width: 40vw;      /* حجم نسبي للجوال */
+            min-width: 120px; /* أصغر حجم ممكن باش ميتكمش بزاف */
             height: auto;
         }
     </style>
 </head>
 <body>
 
-    <div class="icon-wrapper">
+    <div class="icon-container">
         <a href="https://ibb.co/F4B4jpsk">
-            <img src="https://i.ibb.co/qYRYP60L/8-A80-E4-D3-4-C0-D-4482-87-A3-A101980-B803-D.png" alt="8-A80-E4-D3-4-C0-D-4482-87-A3-A101980-B803-D" border="0">
+            <img src="https://i.ibb.co/qYRYP60L/8-A80-E4-D3-4-C0-D-4482-87-A3-A101980-B803-D.png" alt="Icon Logo" border="0">
         </a>
     </div>
 
