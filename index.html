@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Wiron Wallet - Full Dynamic Site</title>
+    <title>Wiron Wallet - Professional Integration</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
 
@@ -13,14 +13,14 @@
             height: 100%; width: 100%; 
             background-color: #ffffff;
             display: flex; flex-direction: column; align-items: center;
-            overflow-x: hidden; /* السماح بالتمرير العمودي فقط */
+            overflow-y: auto; /* تم تفعيل التمرير العمودي للوصول للتذييل */
         }
 
         /* --- Header --- */
         .main-header {
             width: 100%; height: 75px; padding: 0 5%;
             display: flex; justify-content: space-between; align-items: center;
-            background: #ffffff; border-bottom: 1px solid #f0f0f0; z-index: 2000;
+            background: #ffffff; border-bottom: 1px solid #f0f0f0; position: sticky; top: 0; z-index: 2000;
         }
         .header-left img { height: 40px; width: auto; }
 
@@ -31,7 +31,7 @@
         /* --- Main Content Container --- */
         .content-wrapper {
             flex: 1; width: 100%; display: flex; flex-direction: column; align-items: center;
-            padding: 40px 0;
+            padding: 40px 0; min-height: 90vh; /* ضمان وجود مساحة كافية للتمرير */
         }
 
         .app-container {
@@ -40,28 +40,33 @@
             border-radius: 35px; box-shadow: 0 10px 40px rgba(0,0,0,0.08); border: 1px solid #eee;
         }
 
-        /* --- Footer (دمج التذييل من الصورة 8) --- */
+        /* --- Footer (دمج icon5 وتنسيق الصورة 8) --- */
         .main-footer {
-            width: 100%; padding: 40px 8%;
-            background: linear-gradient(135deg, #2b56d3 0%, #15bff0 100%); /* نفس تدرج الصورة */
+            width: 100%; padding: 50px 8%;
+            background: linear-gradient(135deg, #2b56d3 0%, #15bff0 100%);
             color: white; display: flex; flex-wrap: wrap; justify-content: space-between;
-            gap: 30px; margin-top: 60px;
+            gap: 30px; position: relative;
         }
 
         .footer-brand { flex: 1; min-width: 200px; }
-        .footer-brand img { height: 45px; margin-bottom: 20px; }
-        .social-icons { display: flex; gap: 15px; margin-top: 15px; }
+        .footer-brand img.logo { height: 45px; margin-bottom: 25px; display: block; }
+        
+        /* استدعاء icon5.png تحت اللوغو */
+        .icon5-container { margin-bottom: 20px; }
+        .icon5-container img { height: 50px; width: auto; } 
+
+        .social-icons { display: flex; gap: 15px; margin-top: 20px; }
         .social-icons img { width: 24px; cursor: pointer; opacity: 0.9; }
 
         .footer-links { display: flex; flex: 2; justify-content: space-around; gap: 20px; }
-        .link-group { display: flex; flex-direction: column; gap: 12px; }
+        .link-group { display: flex; flex-direction: column; gap: 15px; }
         .link-group a { color: white; text-decoration: none; font-size: 14px; opacity: 0.85; transition: 0.3s; }
         .link-group a:hover { opacity: 1; text-decoration: underline; }
 
         .back-to-top {
-            width: 40px; height: 40px; background: rgba(255,255,255,0.3);
-            border-radius: 5px; display: flex; justify-content: center; align-items: center;
-            cursor: pointer; align-self: center;
+            width: 45px; height: 45px; background: rgba(255,255,255,0.25);
+            border-radius: 8px; display: flex; justify-content: center; align-items: center;
+            cursor: pointer; align-self: flex-start; margin-top: 10px;
         }
 
         /* --- Screens --- */
@@ -75,6 +80,7 @@
         .input-box { width: 100%; height: 80px; border: 1.5px solid #d1d9e6; border-radius: 15px; margin-bottom: 20px; padding: 15px; outline: none; }
 
         @media (max-width: 768px) {
+            .app-container { max-width: 100%; height: 90vh; border-radius: 0; }
             .footer-links { flex-direction: column; }
             .nav-links { display: none; }
         }
@@ -90,7 +96,7 @@
             <a href="#">News</a>
             <a href="#">Coins Wiki</a>
         </nav>
-        <div style="color:#333; font-size:14px;">🇬🇧 English</div>
+        <div style="color:#333; font-size:14px; font-weight: 500;">🇬🇧 English</div>
     </header>
 
     <div class="content-wrapper">
@@ -99,7 +105,7 @@
             
             <div id="onboarding-screen" class="screen" style="padding:40px 25px; text-align:center;">
                 <img src="icon2.png" style="width:100%; max-width:240px; margin:20px auto;">
-                <h1 style="font-size:24px;">Sûr et pratique</h1>
+                <h1 style="font-size:24px; color: #1a1a1a;">Sûr et pratique</h1>
                 <p style="color:#666; margin:15px 0;">Vous seul avez accès aux clés privées</p>
                 <div style="margin-top:auto; padding-bottom:15px;">
                     <button class="btn-primary">Créer un portefeuille</button>
@@ -113,7 +119,7 @@
                     <div style="flex-grow:1; text-align:center; font-weight:600;">Importer le portefeuille</div>
                 </div>
                 <div style="padding:20px;">
-                    <div style="background:#fff; padding:20px; border-radius:18px; display:flex; align-items:center; gap:15px; box-shadow:0 4px 15px rgba(0,0,0,0.05); cursor:pointer;" onclick="navigate('import-methods-screen', 'manual-entry-screen')">
+                    <div class="import-card" style="background:#fff; padding:20px; border-radius:18px; display:flex; align-items:center; gap:15px; box-shadow:0 4px 15px rgba(0,0,0,0.05); cursor:pointer;" onclick="navigate('import-methods-screen', 'manual-entry-screen')">
                         <img src="icon3.png" style="width:50px;">
                         <div><h4 style="font-size:16px;">Manuellement</h4><p style="font-size:12px; color:#999;">Écrivez manuellement la phrase...</p></div>
                     </div>
@@ -136,7 +142,10 @@
 
     <footer class="main-footer">
         <div class="footer-brand">
-            <img src="icon4.png" alt="Wiron Wallet">
+            <img src="icon4.png" alt="Logo" class="logo">
+            <div class="icon5-container">
+                <img src="icon5.png" alt="Support Icon">
+            </div>
             <div class="social-icons">
                 <img src="x_icon.png" alt="X">
                 <img src="telegram_icon.png" alt="TG">
@@ -160,7 +169,7 @@
             </div>
         </div>
 
-        <div class="back-to-top">↑</div>
+        <div class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">↑</div>
     </footer>
 
     <script>
