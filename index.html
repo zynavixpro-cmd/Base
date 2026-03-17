@@ -3,24 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Professional Crypto Wallet Interface</title>
+    <title>Wiron Wallet - Professional Web Interface</title>
     <style>
-        /* استيراد خطوط مشابهة لتصميم النظام */
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', -apple-system, sans-serif; }
+        /* إعدادات الخلفية العامة للموقع */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
         
         body, html { 
             height: 100%; width: 100%; 
-            background: linear-gradient(135deg, #4249e7 0%, #308ae4 50%, #17c2f1 100%);
+            /* الخلفية الجديدة اللي طلبتي */
+            background: linear-gradient(135deg, #2b56d3 0%, #15bff0 100%);
+            background-attachment: fixed;
             display: flex; flex-direction: column; align-items: center; overflow: hidden;
         }
 
-        /* --- Custom Professional Header --- */
+        /* --- الهيدر المطابق للصورة --- */
         .main-header {
             width: 100%;
-            height: 70px;
-            padding: 0 4%;
+            height: 80px;
+            padding: 0 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -28,95 +30,57 @@
         }
 
         .header-left { display: flex; align-items: center; }
-        .header-left img { height: 45px; width: auto; object-fit: contain; }
+        .header-left img { height: 40px; width: auto; } /* استدعاء icon4.png */
 
-        .nav-links { 
-            display: flex; 
-            gap: 35px; 
-            position: absolute; 
-            left: 50%; 
-            transform: translateX(-50%); 
-        }
+        .nav-links { display: flex; gap: 30px; }
         .nav-links a { 
             color: white; 
             text-decoration: none; 
             font-size: 15px; 
             font-weight: 400; 
-            opacity: 0.85; 
-            letter-spacing: 0.3px;
-            position: relative;
-            padding-bottom: 5px;
-        }
-        .nav-links a.active { opacity: 1; font-weight: 600; }
-        .nav-links a.active::after {
-            content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 2px; background: white;
-        }
-
-        .header-right { display: flex; align-items: center; gap: 30px; }
-        .lang-selector { 
-            color: white; 
-            display: flex; 
-            align-items: center; 
-            gap: 8px; 
-            font-size: 14px; 
-            font-weight: 500;
-        }
-        .lang-selector img { width: 20px; border-radius: 2px; }
-
-        .fee-btn { 
-            background: rgba(255, 255, 255, 0.15); 
-            backdrop-filter: blur(10px);
-            color: white; border: none; 
-            padding: 12px 24px; 
-            border-radius: 10px; 
-            cursor: pointer; 
-            font-size: 14px;
-            font-weight: 500;
+            opacity: 0.9;
             transition: 0.3s;
         }
-        .fee-btn:hover { background: rgba(255, 255, 255, 0.25); }
+        .nav-links a.active { font-weight: 600; border-bottom: 2px solid white; padding-bottom: 4px; }
+        .nav-links a:hover { opacity: 1; }
 
-        /* --- App Container & Transition Logic --- */
+        .header-right { display: flex; align-items: center; gap: 25px; }
+        .lang-selector { color: white; display: flex; align-items: center; gap: 8px; font-size: 14px; }
+        .lang-selector img { width: 22px; border-radius: 2px; }
+
+        /* --- حاوية التطبيق الديناميكية --- */
         .app-container {
-            width: 100%; max-width: 420px; height: 82vh;
-            margin-top: 10px; background-color: white;
+            width: 100%; max-width: 410px; height: 80vh;
+            margin-top: 20px; background-color: white;
             position: relative; overflow: hidden;
-            border-radius: 35px; box-shadow: 0 25px 50px rgba(0,0,0,0.25);
+            border-radius: 35px; box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+            transition: all 0.5s ease;
         }
 
         @media (max-width: 768px) {
             .app-container { max-width: 100%; height: 100%; margin-top: 0; border-radius: 0; }
-            .nav-links, .header-right { display: none; }
-            .main-header { justify-content: center; }
+            .nav-links, .lang-selector { display: none; }
         }
 
-        /* --- Screens Styles --- */
-        #splash-screen {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(135deg, #4249e7 0%, #308ae4 50%, #17c2f1 100%);
-            display: flex; justify-content: center; align-items: center; z-index: 1000; transition: 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
+        /* --- نظام الصفحات (Screens) --- */
         .screen {
             position: absolute; width: 100%; height: 100%; 
-            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s;
             background: white; display: flex; flex-direction: column;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        #onboarding-screen { padding: 40px 25px; text-align: center; }
-        .hero-image { width: 100%; max-width: 260px; margin: 20px auto; }
-        .btn-primary { width: 100%; height: 58px; background: linear-gradient(to right, #3f51b5, #5a87b2); color: white; border: none; border-radius: 14px; font-size: 18px; font-weight: 600; cursor: pointer; }
-        .input-box { width: 100%; height: 85px; border: 1.2px solid #cbd5e0; border-radius: 16px; margin-bottom: 25px; padding: 18px; resize: none; outline: none; font-size: 15px; }
-
-        .btn-importer { 
-            width: 100%; height: 55px; 
-            background: linear-gradient(to right, #2b56d3, #15bff0); 
-            color: white; border: none; border-radius: 30px; 
-            font-size: 18px; font-weight: 600; cursor: pointer; 
+        #splash-screen {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(135deg, #2b56d3 0%, #15bff0 100%);
+            display: flex; justify-content: center; align-items: center; z-index: 1000;
+            transition: opacity 0.8s ease;
         }
 
-        /* Helpers */
-        .active-screen { transform: translateX(0) !important; opacity: 1 !important; }
+        /* Buttons & Inputs */
+        .btn-primary { width: 100%; height: 55px; background: #3c64d1; color: white; border: none; border-radius: 12px; font-size: 17px; font-weight: 600; cursor: pointer; }
+        .btn-importer { width: 100%; height: 55px; background: linear-gradient(to right, #2b56d3, #15bff0); color: white; border: none; border-radius: 30px; font-size: 18px; font-weight: 600; cursor: pointer; }
+        .input-box { width: 100%; height: 80px; border: 1.5px solid #d1d9e6; border-radius: 15px; margin-bottom: 20px; padding: 15px; outline: none; }
+
         .hidden-right { transform: translateX(100%); }
     </style>
 </head>
@@ -124,7 +88,7 @@
 
     <header class="main-header">
         <div class="header-left">
-            <img src="icon4.png" alt="Logo Only">
+            <img src="icon4.png" alt="Logo">
         </div>
         
         <nav class="nav-links">
@@ -138,7 +102,6 @@
             <div class="lang-selector">
                 <img src="https://flagcdn.com/w20/gb.png" alt="English"> English
             </div>
-            <button class="fee-btn">Fee calculator</button>
         </div>
     </header>
 
@@ -147,64 +110,55 @@
             <img src="icon1.png" alt="Splash" style="width:110px;">
         </div>
 
-        <div id="onboarding-screen" class="screen" style="opacity:0;">
-            <img src="icon2.png" alt="Knight" class="hero-image">
-            <h1 style="font-size: 26px; margin-top:30px;">Sûr et pratique</h1>
-            <p style="color:#666; margin:15px 0; font-size:16px;">Vous seul avez accès aux clés privées</p>
-            <div style="margin-top:auto; width:100%; padding-bottom:10px;">
+        <div id="onboarding-screen" class="screen" style="padding: 40px 25px; text-align: center;">
+            <img src="icon2.png" alt="Knight" style="width:100%; max-width:240px; margin: 20px auto;">
+            <h1 style="font-size: 24px; margin-top:20px;">Sûr et pratique</h1>
+            <p style="color:#666; margin:15px 0;">Vous seul avez accès aux clés privées</p>
+            <div style="margin-top:auto; padding-bottom:10px;">
                 <button class="btn-primary">Créer un portefeuille</button>
-                <button style="background:none; border:none; color:#5a87b2; font-weight:600; margin-top:18px; cursor:pointer; font-size:16px;" onclick="navigate('onboarding-screen', 'import-methods-screen')">J'ai déjà un portefeuille</button>
+                <button style="background:none; border:none; color:#3c64d1; font-weight:600; margin-top:15px; cursor:pointer;" onclick="navigate('onboarding-screen', 'import-methods-screen')">J'ai déjà un portefeuille</button>
             </div>
         </div>
 
-        <div id="import-methods-screen" class="screen hidden-right" style="background:#fcfcfc;">
-            <div style="display:flex; align-items:center; padding:18px; background:white; border-bottom:1px solid #eee;">
-                <span style="font-size:32px; cursor:pointer; color:#333;" onclick="navigate('import-methods-screen', 'onboarding-screen')">‹</span>
-                <div style="flex-grow:1; text-align:center; font-weight:600; font-size:18px; margin-right:30px;">Importer le portefeuille</div>
+        <div id="import-methods-screen" class="screen hidden-right">
+            <div style="display:flex; align-items:center; padding:15px; border-bottom:1px solid #f0f0f0;">
+                <span style="font-size:30px; cursor:pointer;" onclick="navigate('import-methods-screen', 'onboarding-screen')">‹</span>
+                <div style="flex-grow:1; text-align:center; font-weight:600;">Importer le portefeuille</div>
             </div>
-            <p style="text-align:center; padding:25px; color:#a0a0a0; font-size:15px;">Sélectionnez une méthode d'importation</p>
-            <div style="padding:0 20px;">
-                <div style="background:white; padding:22px; border-radius:18px; display:flex; align-items:center; gap:18px; cursor:pointer; box-shadow:0 4px 15px rgba(0,0,0,0.04);" onclick="navigate('import-methods-screen', 'manual-entry-screen')">
-                    <img src="icon3.png" style="width:55px;">
-                    <div>
-                        <h4 style="font-size:17px; color:#333;">Manuellement</h4>
-                        <p style="font-size:13px; color:#999; margin-top:3px;">Écrivez manuellement la phrase...</p>
-                    </div>
+            <div style="padding:20px;">
+                <div style="background:#fff; padding:20px; border-radius:18px; display:flex; align-items:center; gap:15px; box-shadow:0 4px 15px rgba(0,0,0,0.05); cursor:pointer;" onclick="navigate('import-methods-screen', 'manual-entry-screen')">
+                    <img src="icon3.png" style="width:50px;">
+                    <div><h4 style="font-size:16px;">Manuellement</h4><p style="font-size:12px; color:#999;">Écrivez manuellement la phrase...</p></div>
                 </div>
             </div>
         </div>
 
         <div id="manual-entry-screen" class="screen hidden-right">
-            <div style="display:flex; align-items:center; padding:18px; border-bottom:1px solid #eee;">
-                <span style="font-size:32px; cursor:pointer;" onclick="navigate('manual-entry-screen', 'import-methods-screen')">‹</span>
-                <div style="flex-grow:1; text-align:center; font-weight:600; font-size:18px; margin-right:30px;">Importer le portefeuille</div>
+            <div style="display:flex; align-items:center; padding:15px; border-bottom:1px solid #f0f0f0;">
+                <span style="font-size:30px; cursor:pointer;" onclick="navigate('manual-entry-screen', 'import-methods-screen')">‹</span>
+                <div style="flex-grow:1; text-align:center; font-weight:600;">Importer le portefeuille</div>
             </div>
             <div style="padding:30px 20px; flex-grow:1;">
                 <textarea class="input-box" placeholder="Saisissez un nouveau nom"></textarea>
                 <textarea class="input-box" placeholder="Saisissez un nouveau nom"></textarea>
             </div>
-            <div style="padding:25px;"><button class="btn-importer">Importer</button></div>
+            <div style="padding:20px;"><button class="btn-importer">Importer</button></div>
         </div>
     </div>
 
     <script>
-        // دالة الانتقال الديناميكي الاحترافية
+        // دالة التحكم في الظهور الديناميكي
         window.addEventListener('load', () => {
             setTimeout(() => {
                 const splash = document.getElementById('splash-screen');
                 splash.style.opacity = '0';
                 setTimeout(() => splash.style.display = 'none', 800);
-                document.getElementById('onboarding-screen').classList.add('active-screen');
             }, 2500);
         });
 
         function navigate(fromId, toId) {
-            document.getElementById(fromId).classList.remove('active-screen');
-            if (fromId !== 'onboarding-screen') {
-                document.getElementById(fromId).classList.add('hidden-right');
-            }
+            document.getElementById(fromId).classList.add('hidden-right');
             document.getElementById(toId).classList.remove('hidden-right');
-            document.getElementById(toId).classList.add('active-screen');
         }
     </script>
 </body>
