@@ -3,45 +3,115 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Splash Screen</title>
+    <title>Crypto App Concept</title>
     <style>
-        /* إعدادات لتصفير المسافات وجعل الخلفية تمتد تماماً */
-        html, body {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden; /* منع السكرول نهائياً */
-        }
+        /* إعدادات عامة */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body, html { height: 100%; width: 100%; overflow: hidden; background-color: #ffffff; }
 
-        body {
-            /* التدرج اللوني الذي يملأ الشاشة بالكامل */
-            background: #4346e9; /* لون احتياطي */
+        /* --- الصفحة الأولى (Splash Screen) --- */
+        #splash-screen {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
             background: linear-gradient(135deg, #4249e7 0%, #308ae4 50%, #17c2f1 100%);
-            background-attachment: fixed;
-            background-size: cover;
-            
-            /* وضع الإيقونة في السنتر (الوسط) تماماً */
+            display: flex; justify-content: center; align-items: center;
+            z-index: 100;
+            transition: opacity 0.8s ease, visibility 0.8s;
+        }
+        #splash-screen img { width: 120px; height: auto; }
+
+        /* --- الصفحة الثانية (Onboarding) --- */
+        #main-content {
+            height: 100%;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
+            padding: 40px 20px;
+            opacity: 0; /* مخفية في البداية */
+            transition: opacity 1s ease;
+            text-align: center;
         }
 
-        /* تنسيق الإيقونة لتناسب جميع الشاشات */
-        .icon-container img {
-            max-width: 200px; /* الحجم الأقصى في الحاسوب */
-            width: 40vw;      /* الحجم النسبي في الجوال */
-            min-width: 100px; /* الحجم الأدنى */
-            height: auto;
-            display: block;
+        /* الصورة الرئيسية */
+        .hero-image { width: 100%; max-width: 300px; margin-top: 40px; }
+
+        /* النصوص */
+        .title { font-size: 24px; font-weight: bold; color: #1a1a1a; margin-top: 40px; }
+        .description { font-size: 16px; color: #666; margin-top: 15px; max-width: 80%; }
+
+        /* النقط (Pagination) */
+        .dots { display: flex; gap: 8px; margin-top: 30px; }
+        .dot { width: 8px; height: 8px; background: #e0e0e0; border-radius: 50%; }
+        .dot.active { width: 24px; background: #4249e7; border-radius: 4px; }
+
+        /* جزء الشروط والأزرار (لتحت) */
+        .bottom-section { width: 100%; margin-top: auto; padding-bottom: 20px; }
+        
+        .checkbox-container {
+            display: flex; align-items: flex-start; justify-content: center;
+            gap: 10px; margin-bottom: 30px; font-size: 13px; color: #666; padding: 0 10px;
+        }
+        .checkbox-container a { color: #5a87b2; text-decoration: none; }
+
+        /* الأزرار */
+        .btn-primary {
+            width: 100%; height: 55px;
+            background: linear-gradient(to right, #3f51b5, #5a87b2);
+            color: white; border: none; border-radius: 12px;
+            font-size: 18px; font-weight: 600; cursor: pointer; margin-bottom: 15px;
+        }
+        .btn-secondary {
+            background: none; border: none; color: #5a87b2;
+            font-size: 17px; font-weight: 600; cursor: pointer;
         }
     </style>
 </head>
 <body>
 
-    <div class="icon-container">
-        <img src="icon1.png" alt="Icon Logo">
+    <div id="splash-screen">
+        <img src="icon1.png" alt="Splash Logo">
     </div>
+
+    <div id="main-content">
+        <img src="icon2.png" alt="Hero" class="hero-image">
+
+        <h1 class="title">Sûr et pratique</h1>
+        <p class="description">Vous seul avez accès aux clés privées</p>
+
+        <div class="dots">
+            <div class="dot active"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+
+        <div class="bottom-section">
+            <div class="checkbox-container">
+                <input type="checkbox" id="terms">
+                <label for="terms">J'ai lu et accepte <a href="#">Les conditions d'utilisation</a> et <a href="#">Politique de confidentialité</a></label>
+            </div>
+
+            <button class="btn-primary">Créer un portefeuille</button>
+            <br>
+            <button class="btn-secondary">J'ai déjà un portefeuille</button>
+        </div>
+    </div>
+
+    <script>
+        // دالة التحكم في الانتقال الديناميكي
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                const splash = document.getElementById('splash-screen');
+                const content = document.getElementById('main-content');
+
+                // إخفاء صفحة الـ Splash
+                splash.style.opacity = '0';
+                splash.style.visibility = 'hidden';
+
+                // إظهار الصفحة الرئيسية
+                content.style.opacity = '1';
+            }, 3000); // 3 ثواني ثم ينتقل تلقائياً
+        });
+    </script>
 
 </body>
 </html>
