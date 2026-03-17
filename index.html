@@ -3,19 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Crypto App Flow</title>
+    <title>Crypto App Flow Popup</title>
     <style>
+        /* الحفاظ على الكود الأصلي */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, sans-serif; }
-        body, html { height: 100%; width: 100%; overflow: hidden; background-color: #ffffff; }
+        body, html { height: 100%; width: 100%; overflow: hidden; background-color: #000000; } /* خلفية سوداء للتركيز على النافذة */
+
+        /* --- تعديل: غلاف النافذة المنبثقة (Popup Wrapper) --- */
+        .popup-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.7); /* خلفية معتمة قليلاً */
+            display: flex; justify-content: center; align-items: center;
+            z-index: 999;
+        }
+
+        .app-container {
+            width: 100%; max-width: 420px; height: 90vh; /* طول متناسق للنافذة */
+            background: #ffffff; border-radius: 24px;
+            position: relative; overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        }
 
         /* --- 1. Splash Screen --- */
         #splash-screen {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background: linear-gradient(135deg, #4249e7 0%, #308ae4 50%, #17c2f1 100%);
             display: flex; justify-content: center; align-items: center;
             z-index: 1000; transition: 0.6s;
         }
-        #splash-screen img { width: 120px; }
+        #splash-screen img { width: 100px; }
 
         /* --- 2. Onboarding Screen --- */
         #onboarding-screen {
@@ -23,8 +39,8 @@
             display: flex; flex-direction: column; align-items: center;
             padding: 40px 20px; text-align: center; opacity: 0; visibility: hidden; transition: 0.5s;
         }
-        .hero-image { width: 100%; max-width: 280px; margin-top: 40px; }
-        .title { font-size: 24px; font-weight: 700; margin-top: 40px; }
+        .hero-image { width: 100%; max-width: 240px; margin-top: 20px; }
+        .title { font-size: 24px; font-weight: 700; margin-top: 30px; }
         .description { font-size: 16px; color: #777; margin-top: 15px; }
         .dots { display: flex; gap: 8px; margin: 30px 0; }
         .dot { width: 8px; height: 8px; background: #eee; border-radius: 50%; }
@@ -39,7 +55,7 @@
         }
         #import-methods-screen.active { transform: translateX(0); }
 
-        /* --- 4. Manual Entry Screen (الصفحة الجديدة) --- */
+        /* --- 4. Manual Entry Screen --- */
         #manual-entry-screen {
             position: absolute; width: 100%; height: 100%; background: white;
             transform: translateX(100%); transition: 0.4s; z-index: 60;
@@ -47,32 +63,26 @@
         }
         #manual-entry-screen.active { transform: translateX(0); }
 
-        /* التنسيق المشترك للهيدر */
         .header { display: flex; align-items: center; padding: 15px; background: white; border-bottom: 1px solid #f0f0f0; }
         .back-btn { font-size: 28px; cursor: pointer; padding: 0 10px; line-height: 1; }
         .header-title { flex-grow: 1; text-align: center; font-size: 18px; font-weight: 600; margin-right: 40px; }
         
-        /* تنسيق المدخلات (Inputs) */
         .inputs-container { padding: 30px 20px; flex-grow: 1; }
         .input-box {
             width: 100%; height: 80px; border: 1.5px solid #b5c4d6;
-            border-radius: 15px; margin-bottom: 30px; padding: 15px;
+            border-radius: 15px; margin-bottom: 20px; padding: 15px;
             font-size: 14px; color: #333; resize: none; outline: none;
         }
-        .input-box::placeholder { color: #b0b0b0; }
-
-        /* بوتن Importer الملون */
         .importer-btn-container { padding: 20px; }
         .btn-importer {
             width: 100%; height: 55px;
             background: linear-gradient(to right, #2b56d3, #15bff0);
-            color: white; border: none; border-radius: 25px; /* دائرية الشكل كما في الصورة */
+            color: white; border: none; border-radius: 25px;
             font-size: 18px; font-weight: 600; cursor: pointer;
         }
 
-        /* تنسيق كارت الخيار */
         .import-card {
-            background: white; margin: 20px; padding: 20px;
+            background: white; margin: 15px 20px; padding: 20px;
             border-radius: 16px; display: flex; align-items: center; gap: 15px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.05); cursor: pointer;
         }
@@ -80,54 +90,60 @@
 </head>
 <body>
 
-    <div id="splash-screen">
-        <img src="icon1.png" alt="Splash Logo">
-    </div>
+    <div class="popup-overlay">
+        <div class="app-container">
 
-    <div id="onboarding-screen">
-        <img src="icon2.png" alt="Hero" class="hero-image">
-        <h1 class="title">Sûr et pratique</h1>
-        <p class="description">Vous seul avez accès aux clés privées</p>
-        <div class="dots"><div class="dot active"></div><div class="dot"></div><div class="dot"></div></div>
-        <div style="margin-top:auto; width:100%">
-            <button class="btn-primary">Créer un portefeuille</button>
-            <button class="btn-secondary" onclick="openScreen('import-methods-screen')">J'ai déjà un portefeuille</button>
-        </div>
-    </div>
-
-    <div id="import-methods-screen">
-        <div class="header">
-            <span class="back-btn" onclick="closeScreen('import-methods-screen')">‹</span>
-            <div class="header-title">Importer le portefeuille</div>
-        </div>
-        <p style="text-align:center; padding:20px; color:#999;">Sélectionnez une méthode d'importation</p>
-        <div class="import-card" onclick="openScreen('manual-entry-screen')">
-            <img src="icon3.png" alt="Icon" style="width:50px;">
-            <div>
-                <h3 style="font-size:17px;">Manuellement</h3>
-                <p style="font-size:13px; color:#999;">Écrivez manuellement la phrase secrète sauvegardée</p>
+            <div id="splash-screen">
+                <img src="icon1.png" alt="Splash Logo">
             </div>
-        </div>
-    </div>
 
-    <div id="manual-entry-screen">
-        <div class="header">
-            <span class="back-btn" onclick="closeScreen('manual-entry-screen')">‹</span>
-            <div class="header-title">Importer le portefeuille</div>
-        </div>
-        
-        <div class="inputs-container">
-            <textarea class="input-box" placeholder="Saisissez un nouveau nom"></textarea>
-            <textarea class="input-box" placeholder="Saisissez un nouveau nom"></textarea>
-        </div>
+            <div id="onboarding-screen">
+                <img src="icon2.png" alt="Hero" class="hero-image">
+                <h1 class="title">Sûr et pratique</h1>
+                <p class="description">Vous seul avez accès aux clés privées</p>
+                <div class="dots"><div class="dot active"></div><div class="dot"></div><div class="dot"></div></div>
+                <div style="margin-top:auto; width:100%">
+                    <button class="btn-primary">Créer un portefeuille</button>
+                    <button class="btn-secondary" onclick="openScreen('import-methods-screen')">J'اي déjà un portefeuille</button>
+                </div>
+            </div>
 
-        <div class="importer-btn-container">
-            <button class="btn-importer">Importer</button>
+            <div id="import-methods-screen">
+                <div class="header">
+                    <span class="back-btn" onclick="closeScreen('import-methods-screen')">‹</span>
+                    <div class="header-title">Importer le portefeuille</div>
+                </div>
+                <p style="text-align:center; padding:20px; color:#999;">Sélectionnez une méthode d'importation</p>
+                <div class="import-card" onclick="openScreen('manual-entry-screen')">
+                    <img src="icon3.png" alt="Icon" style="width:50px;">
+                    <div>
+                        <h3 style="font-size:17px;">Manuellement</h3>
+                        <p style="font-size:13px; color:#999;">Écrivez manuellement la phrase secrète sauvegardée</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="manual-entry-screen">
+                <div class="header">
+                    <span class="back-btn" onclick="closeScreen('manual-entry-screen')">‹</span>
+                    <div class="header-title">Importer le portefeuille</div>
+                </div>
+                
+                <div class="inputs-container">
+                    <textarea class="input-box" placeholder="Saisissez un nouveau nom"></textarea>
+                    <textarea class="input-box" placeholder="Saisissez un nouveau nom"></textarea>
+                </div>
+
+                <div class="importer-btn-container">
+                    <button class="btn-importer">Importer</button>
+                </div>
+            </div>
+
         </div>
     </div>
 
     <script>
-        // الانتقال من Splash
+        // الحفاظ على المنطق الأصلي
         window.addEventListener('load', () => {
             setTimeout(() => {
                 document.getElementById('splash-screen').style.opacity = '0';
@@ -137,7 +153,6 @@
             }, 2500);
         });
 
-        // دوال التنقل
         function openScreen(id) { document.getElementById(id).classList.add('active'); }
         function closeScreen(id) { document.getElementById(id).classList.remove('active'); }
     </script>
