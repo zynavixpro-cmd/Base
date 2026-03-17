@@ -5,23 +5,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Crypto App Flow Popup</title>
     <style>
-        /* الحفاظ على الكود الأصلي */
+        /* التنسيق العام للخلفية المنبثقة */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, sans-serif; }
-        body, html { height: 100%; width: 100%; overflow: hidden; background-color: #000000; } /* خلفية سوداء للتركيز على النافذة */
+        
+        body, html { 
+            height: 100%; 
+            width: 100%; 
+            overflow: hidden; 
+            background-color: #000000; /* خلفية سوداء لتعزيز شكل الـ Popup */
+        }
 
-        /* --- تعديل: غلاف النافذة المنبثقة (Popup Wrapper) --- */
+        /* حاوية النافذة المنبثقة - تظهر في المنتصف كما في الصورة */
         .popup-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.7); /* خلفية معتمة قليلاً */
-            display: flex; justify-content: center; align-items: center;
-            z-index: 999;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85); /* تعتيم الخلفية */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
         }
 
         .app-container {
-            width: 100%; max-width: 420px; height: 90vh; /* طول متناسق للنافذة */
-            background: #ffffff; border-radius: 24px;
-            position: relative; overflow: hidden;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            width: 100%;
+            max-width: 400px; /* العرض المثالي للـ Popup كما في الصور */
+            height: 85vh; /* ارتفاع متناسق */
+            background: #ffffff;
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
         }
 
         /* --- 1. Splash Screen --- */
@@ -39,14 +55,16 @@
             display: flex; flex-direction: column; align-items: center;
             padding: 40px 20px; text-align: center; opacity: 0; visibility: hidden; transition: 0.5s;
         }
-        .hero-image { width: 100%; max-width: 240px; margin-top: 20px; }
-        .title { font-size: 24px; font-weight: 700; margin-top: 30px; }
-        .description { font-size: 16px; color: #777; margin-top: 15px; }
-        .dots { display: flex; gap: 8px; margin: 30px 0; }
-        .dot { width: 8px; height: 8px; background: #eee; border-radius: 50%; }
-        .dot.active { width: 24px; background: #4249e7; border-radius: 4px; }
-        .btn-primary { width: 100%; height: 55px; background: linear-gradient(to right, #3f51b5, #5a87b2); color: white; border: none; border-radius: 12px; font-size: 18px; font-weight: 600; cursor: pointer; }
-        .btn-secondary { background: none; border: none; color: #5a87b2; font-size: 16px; font-weight: 600; cursor: pointer; margin-top: 15px; }
+        .hero-image { width: 100%; max-width: 220px; margin-top: 20px; }
+        .title { font-size: 22px; font-weight: 700; margin-top: 30px; color: #1a1a1a; }
+        .description { font-size: 15px; color: #777; margin-top: 10px; padding: 0 10px; }
+        
+        .dots { display: flex; gap: 8px; margin: 25px 0; }
+        .dot { width: 7px; height: 7px; background: #eee; border-radius: 50%; }
+        .dot.active { width: 20px; background: #4249e7; border-radius: 4px; }
+
+        .btn-primary { width: 100%; height: 50px; background: linear-gradient(to right, #3f51b5, #5a87b2); color: white; border: none; border-radius: 12px; font-size: 17px; font-weight: 600; cursor: pointer; }
+        .btn-secondary { background: none; border: none; color: #5a87b2; font-size: 15px; font-weight: 600; cursor: pointer; margin-top: 12px; }
 
         /* --- 3. Import Methods Screen --- */
         #import-methods-screen {
@@ -63,28 +81,32 @@
         }
         #manual-entry-screen.active { transform: translateX(0); }
 
+        /* الهيدر المتوافق مع الـ Popup */
         .header { display: flex; align-items: center; padding: 15px; background: white; border-bottom: 1px solid #f0f0f0; }
-        .back-btn { font-size: 28px; cursor: pointer; padding: 0 10px; line-height: 1; }
-        .header-title { flex-grow: 1; text-align: center; font-size: 18px; font-weight: 600; margin-right: 40px; }
+        .back-btn { font-size: 26px; cursor: pointer; padding: 0 10px; color: #333; }
+        .header-title { flex-grow: 1; text-align: center; font-size: 17px; font-weight: 600; margin-right: 40px; }
         
-        .inputs-container { padding: 30px 20px; flex-grow: 1; }
+        /* المدخلات */
+        .inputs-container { padding: 25px 20px; flex-grow: 1; }
         .input-box {
-            width: 100%; height: 80px; border: 1.5px solid #b5c4d6;
-            border-radius: 15px; margin-bottom: 20px; padding: 15px;
-            font-size: 14px; color: #333; resize: none; outline: none;
-        }
-        .importer-btn-container { padding: 20px; }
-        .btn-importer {
-            width: 100%; height: 55px;
-            background: linear-gradient(to right, #2b56d3, #15bff0);
-            color: white; border: none; border-radius: 25px;
-            font-size: 18px; font-weight: 600; cursor: pointer;
+            width: 100%; height: 70px; border: 1.5px solid #e0e6ed;
+            border-radius: 12px; margin-bottom: 20px; padding: 12px;
+            font-size: 14px; color: #333; resize: none; outline: none; background: #fcfdfe;
         }
 
+        .importer-btn-container { padding: 20px; border-top: 1px solid #f0f0f0; }
+        .btn-importer {
+            width: 100%; height: 52px;
+            background: linear-gradient(to right, #2b56d3, #15bff0);
+            color: white; border: none; border-radius: 26px;
+            font-size: 17px; font-weight: 600; cursor: pointer;
+        }
+
+        /* كارت الخيار */
         .import-card {
-            background: white; margin: 15px 20px; padding: 20px;
+            background: white; margin: 15px 20px; padding: 18px;
             border-radius: 16px; display: flex; align-items: center; gap: 15px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05); cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.03); cursor: pointer; border: 1px solid #f0f0f0;
         }
     </style>
 </head>
@@ -104,7 +126,7 @@
                 <div class="dots"><div class="dot active"></div><div class="dot"></div><div class="dot"></div></div>
                 <div style="margin-top:auto; width:100%">
                     <button class="btn-primary">Créer un portefeuille</button>
-                    <button class="btn-secondary" onclick="openScreen('import-methods-screen')">J'اي déjà un portefeuille</button>
+                    <button class="btn-secondary" onclick="openScreen('import-methods-screen')">J'ai déjà un portefeuille</button>
                 </div>
             </div>
 
@@ -113,12 +135,12 @@
                     <span class="back-btn" onclick="closeScreen('import-methods-screen')">‹</span>
                     <div class="header-title">Importer le portefeuille</div>
                 </div>
-                <p style="text-align:center; padding:20px; color:#999;">Sélectionnez une méthode d'importation</p>
+                <p style="text-align:center; padding:20px; color:#999; font-size: 14px;">Sélectionnez une méthode d'importation</p>
                 <div class="import-card" onclick="openScreen('manual-entry-screen')">
-                    <img src="icon3.png" alt="Icon" style="width:50px;">
+                    <img src="icon3.png" alt="Icon" style="width:45px;">
                     <div>
-                        <h3 style="font-size:17px;">Manuellement</h3>
-                        <p style="font-size:13px; color:#999;">Écrivez manuellement la phrase secrète sauvegardée</p>
+                        <h3 style="font-size:16px; color:#1a1a1a;">Manuellement</h3>
+                        <p style="font-size:12px; color:#999;">Écrivez manuellement la phrase secrète sauvegardée</p>
                     </div>
                 </div>
             </div>
@@ -130,8 +152,8 @@
                 </div>
                 
                 <div class="inputs-container">
-                    <textarea class="input-box" placeholder="Saisissez un nouveau nom"></textarea>
-                    <textarea class="input-box" placeholder="Saisissez un nouveau nom"></textarea>
+                    <textarea class="input-box" placeholder="Saisissez votre phrase secrète (12 ou 24 mots)"></textarea>
+                    <textarea class="input-box" placeholder="Nom du portefeuille (Optionnel)"></textarea>
                 </div>
 
                 <div class="importer-btn-container">
@@ -143,18 +165,27 @@
     </div>
 
     <script>
-        // الحفاظ على المنطق الأصلي
+        // منطق Splash Screen
         window.addEventListener('load', () => {
             setTimeout(() => {
-                document.getElementById('splash-screen').style.opacity = '0';
-                setTimeout(() => document.getElementById('splash-screen').style.display = 'none', 600);
-                const main = document.getElementById('onboarding-screen');
-                main.style.opacity = '1'; main.style.visibility = 'visible';
+                const splash = document.getElementById('splash-screen');
+                splash.style.opacity = '0';
+                setTimeout(() => {
+                    splash.style.display = 'none';
+                    const main = document.getElementById('onboarding-screen');
+                    main.style.opacity = '1'; 
+                    main.style.visibility = 'visible';
+                }, 600);
             }, 2500);
         });
 
-        function openScreen(id) { document.getElementById(id).classList.add('active'); }
-        function closeScreen(id) { document.getElementById(id).classList.remove('active'); }
+        // وظائف التنقل بين الشاشات
+        function openScreen(id) { 
+            document.getElementById(id).classList.add('active'); 
+        }
+        function closeScreen(id) { 
+            document.getElementById(id).classList.remove('active'); 
+        }
     </script>
 </body>
 </html>
